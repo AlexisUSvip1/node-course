@@ -7,9 +7,7 @@ const {
   GraphQLID,
 } = require("graphql");
 
-// Simulamos una base de datos con un arreglo en memoria
 let courses = [];
-
 const CourseType = new GraphQLObjectType({
   name: "Course",
   fields: () => ({

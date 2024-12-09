@@ -1,12 +1,12 @@
 const express = require("express");
-const passport = require("passport");
 const router = express.Router();
 
 // Importa el controlador de Google
 const googleAuth = require("../Controllers/authGoogle");
 // Importa el controlador de Facebook
 const facebookAuth = require("../Controllers/authFacebook");
-
+const registerAuth = require("../Controllers/Register");
+const users = require("../Controllers/Register");
 // Rutas de Google
 router.get("/google", googleAuth.authenticate);
 router.get("/google/callback", googleAuth.callback);
@@ -18,6 +18,10 @@ router.get("/facebook/success", facebookAuth.success);
 router.get("/facebook/error", facebookAuth.error);
 router.get("/facebook/signout", facebookAuth.signout);
 
+router.post("/register", registerAuth.registerUser);
+router.get("/users", registerAuth.getUsersRegister);
+// Ruta para obtener todos los usuarios
+
 // Ruta para obtener los datos del usuario autenticado
 router.get("/me", (req, res) => {
   if (req.isAuthenticated()) {
@@ -27,4 +31,5 @@ router.get("/me", (req, res) => {
   }
 });
 
+router.get("/courses");
 module.exports = router;

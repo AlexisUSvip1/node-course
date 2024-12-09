@@ -17,20 +17,18 @@ exports.callback = (req, res, next) => {
         return next(err);
       }
       if (!user) {
-        return res.redirect("/"); // Si no se autentica correctamente, redirige a la página principal
+        return res.redirect("/");
       }
       req.login(user, (err) => {
         if (err) {
           return next(err);
         }
-        // Redirige al frontend después de la autenticación
         res.redirect("http://localhost:5173/inicio");
       });
     }
   )(req, res, next);
 };
 
-// Configura la estrategia de Google
 passport.use(
   new GoogleStrategy(
     {
@@ -38,7 +36,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Debes definir este valor en tu archivo .env
       callbackURL: "http://localhost:3000/auth/google/callback", // Esta es la URL de callback
     },
-    function (token, tokenSecret, profile, done) {
+    function (accessToken, refreshToken, profile, done) {
       // Aquí puedes guardar el perfil del usuario en tu base de datos
       return done(null, profile);
     }
